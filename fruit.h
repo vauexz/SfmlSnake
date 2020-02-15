@@ -11,10 +11,10 @@
 
         public:
             Fruit(sf::Texture* texture, sf::Vector2u imageCount, sf::Vector2f blockSize, sf::Vector2u blockCount);
-            sf::Vector2f getPosition() { return fruit.getPosition(); };
+            sf::Vector2u getPosition(); // position in range 0 - blockCount;
             void setPosition(sf::Vector2f position) { fruit.setPosition(position); };
-            sf::RectangleShape getFruit() { return fruit; }
             void respawn();
+            void draw(sf::RenderWindow& window);
     };
 
 #endif
