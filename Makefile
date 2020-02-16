@@ -1,5 +1,7 @@
 main: main.o fruit.o
-	g++ main.o fruit.o -o main -lsfml-graphics -lsfml-window -lsfml-system
+	g++ main.o fruit.o \
+		-o main \
+		-lsfml-graphics -lsfml-window -lsfml-system
 	make clean
 
 main.o:

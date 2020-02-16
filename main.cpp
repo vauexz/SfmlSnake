@@ -28,7 +28,7 @@ int main() {
         }
 
         window.clear(sf::Color::Black);
-        window.draw(apple.getFruit());
+        apple.draw(window);
         window.display();
 
     }
