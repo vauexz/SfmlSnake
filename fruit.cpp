@@ -14,10 +14,10 @@ Fruit::Fruit(sf::Texture* texture, sf::Vector2u imageCount, sf::Vector2f blockSi
 }
 
 void Fruit::respawn() {
-    position = {
+    position = sf::Vector2i(
         rand() % blockCount.x,
         rand() % blockCount.y
-    };
+    );
    
     sf::IntRect rect((rand() % imageCount.x) * imageSize.x, (rand() % imageCount.y) * imageSize.y,
         imageSize.x, imageSize.y);

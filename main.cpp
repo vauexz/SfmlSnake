@@ -1,21 +1,25 @@
 #include "variables.h"
-#include "fruit.h"
-#include "snake.h"
 #include <cstdlib>
 #include <ctime>
+#include "game.h"
 /*
     
     g++ -c main.cpp && g++ main.o -o main -lsfml-graphics -lsfml-window -lsfml-system && ./main
 */
 
+/*
+to fix
+    snake chnage move direction
+    pause game
 
+
+*/
 int main() {
     srand(time(NULL));
 
     sf::Texture apl;
     apl.loadFromFile("img/fruit.png");
-    Fruit apple(&apl, sf::Vector2u(3,3), sf::Vector2f(50,50), {12,12}, {0,0});
-    Snake snake(sf::Vector2u(6,6), sf::Vector2f(50,50), sf::Vector2f(0,0));
+    Game game(&apl, sf::Vector2u(3,3), sf::Vector2u(30,30), {20,20}, {0,0}, 1.0/7.0);
     sf::RenderWindow window(sf::VideoMode(WINDOW_SIZE.x, WINDOW_SIZE.y), "Snake Game");
     sf::Clock clock;
     while (window.isOpen()) {
@@ -25,15 +29,11 @@ int main() {
                 window.close();
         }
 
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
-            apple.respawn();
-        }
 
         float deltaTime = clock.restart().asSeconds();
-        snake.move(deltaTime);
+        game.tick(deltaTime);
         window.clear(sf::Color::Black);
-        apple.draw(window);
-        snake.draw(window);
+        game.draw(window);
         window.display();
 
     }
