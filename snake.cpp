@@ -6,10 +6,11 @@ Snake::Snake(sf::Vector2i startPosition, sf::Vector2f blockSize, sf::Vector2f of
     this->blockSize = blockSize;
     segmentsPositions.push_back(startPosition);
     moveDirection = {0,0};
+    moveDone = false;
 }
 
 void Snake::move() {
-
+    moveDone = true;
     for (int i = segmentsPositions.size() - 1; i > 0; i--)
         segmentsPositions[i] = segmentsPositions[i-1];        
     segmentsPositions[0] = sf::Vector2i(segmentsPositions[0].x + moveDirection.x, segmentsPositions[0].y + moveDirection.y);
@@ -46,3 +47,10 @@ bool Snake::isCollision() {
             return true;
     return false;
 };
+
+void Snake::setMoveDirection(sf::Vector2i moveDirection) { 
+    if (this->moveDirection * (-1) != moveDirection && moveDone) {
+        this->moveDirection = moveDirection;
+        moveDone = false;
+    }
+}

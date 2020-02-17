@@ -2,25 +2,32 @@
 #include <cstdlib>
 #include <ctime>
 #include "game.h"
-/*
-    
-    g++ -c main.cpp && g++ main.o -o main -lsfml-graphics -lsfml-window -lsfml-system && ./main
-*/
 
 /*
-to fix
-    snake chnage move direction
-    pause game
-
+    TO DO:
+        SCORE BOARD
+        GAME BOARD
+        TRY TO FIX MOVE
 
 */
+
 int main() {
     srand(time(NULL));
+    sf::Texture ground;
+    ground.loadFromFile("img/ground.png");
+    sf::RectangleShape gameBoard(GAME_BOARD_SIZE);
+    gameBoard.setPosition(OFFSET);
+    gameBoard.setTexture(&ground);
+
+    sf::RectangleShape scoreBoard(SCORE_BOARD_SIZE);
+    scoreBoard.setPosition({0, 0});
+    scoreBoard.setFillColor(sf::Color::Magenta);
 
     sf::Texture apl;
     apl.loadFromFile("img/fruit.png");
-    Game game(&apl, sf::Vector2u(3,3), sf::Vector2u(30,30), {20,20}, {0,0}, 1.0/7.0);
     sf::RenderWindow window(sf::VideoMode(WINDOW_SIZE.x, WINDOW_SIZE.y), "Snake Game");
+    Game game(&apl, sf::Vector2u(3,3), BLOCK_COUNT, BLOCK_SIZE, OFFSET, 1.0/MPS);
+
     sf::Clock clock;
     while (window.isOpen()) {
         sf::Event e;
@@ -33,7 +40,9 @@ int main() {
         float deltaTime = clock.restart().asSeconds();
         game.tick(deltaTime);
         window.clear(sf::Color::Black);
+        window.draw(gameBoard);
         game.draw(window);
+        window.draw(scoreBoard);
         window.display();
 
     }

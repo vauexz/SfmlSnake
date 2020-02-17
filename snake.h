@@ -12,13 +12,14 @@
             sf::Vector2f offset;
             sf::Vector2i moveDirection;
             sf::Vector2f blockSize;
+            bool moveDone;  
         public:
             Snake(sf::Vector2i startPosition, sf::Vector2f blockSize, sf::Vector2f offset);
             void move();
             void draw(sf::RenderWindow& window);
             void extend();
             sf::Vector2i getPosition() { return segmentsPositions[0]; }
-            void setMoveDirection(sf::Vector2i moveDirection) { this->moveDirection = moveDirection; }
+            void setMoveDirection(sf::Vector2i moveDirection);
             bool isCollision();
     };
 
