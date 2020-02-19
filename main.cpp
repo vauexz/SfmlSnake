@@ -8,26 +8,20 @@ int main() {
 
     sf::RenderWindow window(sf::VideoMode(WINDOW_SIZE.x, WINDOW_SIZE.y), "Snake Game");
 
-
     sf::Font font;
     font.loadFromFile("font/Roboto-Black.ttf");
-    
     Scoreboard scoreboard(SCOREBOARD_SIZE, {0,0}, font);
-
 
     sf::RectangleShape gameBoard(GAMEBOARD_SIZE);
     gameBoard.setPosition(OFFSET);
     gameBoard.setFillColor(sf::Color(100,30,200));
-
-
     
     sf::Texture fruitTexture;
     fruitTexture.loadFromFile("img/fruit.png");
-
-
     Game game(&scoreboard, &fruitTexture, sf::Vector2u(3,3), BLOCK_COUNT, BLOCK_SIZE, OFFSET, 1.0/MPS);
 
     sf::Clock clock;
+    
     while (window.isOpen()) {
         sf::Event e;
         while (window.pollEvent(e)) {
