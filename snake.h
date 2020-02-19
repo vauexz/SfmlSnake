@@ -21,6 +21,7 @@
             sf::Vector2i getPosition() { return segmentsPositions[0]; }
             void setMoveDirection(sf::Vector2i moveDirection);
             bool isCollision();
+            void restart(sf::Vector2i restartPosition);
     };
 
 

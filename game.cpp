@@ -1,9 +1,10 @@
 #include "game.h"
 
-Game::Game(sf::Texture* texture, sf::Vector2u imageCount, sf::Vector2u blockCount, sf::Vector2f blockSize, sf::Vector2f offset, float tickTime) 
-:   fruit(texture, imageCount, blockSize, blockCount, offset),
-    snake(sf::Vector2i(blockCount.x / 2, blockCount.y / 2), blockSize, offset) {
+Game::Game(Scoreboard* scoreboard, sf::Texture* texture, sf::Vector2u imageCount, sf::Vector2u blockCount, sf::Vector2f blockSize, sf::Vector2f offset, float tickTime) 
+: fruit(texture, imageCount, blockSize, blockCount, offset),
+  snake(sf::Vector2i(blockCount.x / 2, blockCount.y / 2), blockSize, offset) {
     
+    this->scoreboard = scoreboard;
     totalTime = 0.0f;
     this->tickTime = tickTime;
     this->blockCount = blockCount;
@@ -45,15 +46,25 @@ void Game::tick(float deltaTime) {
             } else if ( snake.getPosition() == fruit.getPosition()) {
                 fruit.respawn();
                 snake.extend();
+                score += 10;
+                scoreboard->setScore(score);
             }
-    }
-
-
+        }
+    } else if (gameStatus == GameStatus::Lost) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+            restart();
     }
 }
-
 
 void Game::draw(sf::RenderWindow& window) {
     snake.draw(window);
     fruit.draw(window);
 };
+
+void Game::restart() {
+    score = 0;
+    totalTime = 0;
+    gameStatus = InProgress;
+    fruit.respawn();
+    snake.restart(sf::Vector2i(blockCount.x/2, blockCount.y/2));
+}

@@ -54,3 +54,9 @@ void Snake::setMoveDirection(sf::Vector2i moveDirection) {
         moveDone = false;
     }
 }
+
+void Snake::restart(sf::Vector2i restartPosition) {
+    segmentsPositions.resize(0);
+    segmentsPositions.push_back(restartPosition);
+    moveDirection = {0,0};
+}
