@@ -5,7 +5,8 @@ Game::Game(Scoreboard* scoreboard, sf::Texture* texture, sf::Vector2u imageCount
   snake(sf::Vector2i(blockCount.x / 2, blockCount.y / 2), blockSize, offset) {
     
     this->scoreboard = scoreboard;
-    totalTime = 0.0f;
+    totalTime = totalBonusTime = 0.0f;
+    bonusTime = 5.0f;
     this->tickTime = tickTime;
     this->blockCount = blockCount;
     gameStatus = GameStatus::InProgress;
@@ -22,6 +23,13 @@ void Game::tick(float deltaTime) {
 
 
     if (gameStatus == GameStatus::InProgress) {
+        totalBonusTime += deltaTime;
+        if (totalBonusTime >= bonusTime) {
+            score += snake.getSize();
+            totalBonusTime -= bonusTime;
+            scoreboard->setScore(score);
+        }
+
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
             snake.setMoveDirection({-1, 0});
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::D))
@@ -62,9 +70,9 @@ void Game::draw(sf::RenderWindow& window) {
 };
 
 void Game::restart() {
-    score = 0;
-    totalTime = 0;
+    totalTime = totalBonusTime = score = 0;
     gameStatus = InProgress;
     fruit.respawn();
     snake.restart(sf::Vector2i(blockCount.x/2, blockCount.y/2));
+    scoreboard->setScore(score);
 }

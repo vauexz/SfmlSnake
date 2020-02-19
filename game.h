@@ -18,6 +18,8 @@
             unsigned int score;
             float totalTime;
             float tickTime;
+            float bonusTime;        // each bonusTime secs player gets snake.size bonus
+            float totalBonusTime;
             sf::Vector2u blockCount;
             GameStatus gameStatus;
 
