@@ -15,12 +15,12 @@ Game::Game(Scoreboard* scoreboard, sf::Texture* texture, sf::Vector2u imageCount
 void Game::tick(float deltaTime) {
     
     //to fix
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
+    /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
         if (gameStatus == GameStatus::InProgress)
             gameStatus = GameStatus::Paused;
         else if (gameStatus == GameStatus::Paused)
             gameStatus = GameStatus::InProgress;
-
+*/
 
     if (gameStatus == GameStatus::InProgress) {
         totalBonusTime += deltaTime;
@@ -75,4 +75,11 @@ void Game::restart() {
     fruit.respawn();
     snake.restart(sf::Vector2i(blockCount.x/2, blockCount.y/2));
     scoreboard->setScore(score);
+}
+
+void Game::pause() {
+    if (gameStatus == GameStatus::InProgress)
+        gameStatus = GameStatus::Paused;
+    else if (gameStatus == GameStatus::Paused)
+        gameStatus = GameStatus::InProgress;
 }

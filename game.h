@@ -28,7 +28,7 @@
             Game(Scoreboard* scoreboard, sf::Texture* texture, sf::Vector2u imageCount, sf::Vector2u blockCount, sf::Vector2f blockSize, sf::Vector2f offset, float tickTime);
             void tick(float deltaTime);
             void draw(sf::RenderWindow& window);
-
+            void pause();
         private:
             void restart();
     };
