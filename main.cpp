@@ -3,10 +3,15 @@
 #include <ctime>
 #include "game.h"
 #include "scoreboard.h"
+#include "gameboard.h"
 int main() {
     srand(time(NULL));
 
     sf::RenderWindow window(sf::VideoMode(WINDOW_SIZE.x, WINDOW_SIZE.y), "Snake Game");
+
+    sf::Texture cellTexture;
+    cellTexture.loadFromFile("img/cell.png");
+    Gameboard gameboard(OFFSET, BLOCK_SIZE, BLOCK_COUNT, &cellTexture);
 
     sf::Font font;
     font.loadFromFile("font/Roboto-Black.ttf");
@@ -35,7 +40,7 @@ int main() {
         float deltaTime = clock.restart().asSeconds();
         game.tick(deltaTime);
         window.clear(sf::Color::Black);
-        window.draw(gameBoard);
+        gameboard.draw(window);
         game.draw(window);
         scoreboard.draw(window);
         window.display();

@@ -23,6 +23,7 @@
             bool isCollision();
             void restart(sf::Vector2i restartPosition);
             int getSize() { return segmentsPositions.size(); }
+            sf::Vector2i getMoveDirection() { return moveDirection; }
     };
 
 

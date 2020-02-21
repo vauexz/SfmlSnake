@@ -1,0 +1,23 @@
+#ifndef PLAYER_H
+    #define PLAYER_H_
+
+    #include <SFML/Graphics.hpp>
+    class Player {
+        private:
+            std::string name;
+            int score;
+            int snakeSize;
+        public:
+            Player(std::string name = "???", int score = 0, int snakeSize = 0) 
+                : name(name), score(score), snakeSize(snakeSize) { }
+            void setName(std::string name) { this->name = name; }
+            std::string getName() const { return name; }
+            void setScore(int score) { this->score = score; }
+            int getScore() const { return score; }
+            void setSnakeSize(int snakeSize) { this->snakeSize = snakeSize; }
+            int getSnakeSize() const { return snakeSize; }
+            bool moreScoreThan(Player& p) { return score > p.getScore(); }
+            bool longerSnakeThan(Player& p) { return snakeSize > p.getSnakeSize(); }
+    };
+
+#endif

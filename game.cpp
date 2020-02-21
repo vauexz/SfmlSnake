@@ -23,11 +23,13 @@ void Game::tick(float deltaTime) {
 */
 
     if (gameStatus == GameStatus::InProgress) {
-        totalBonusTime += deltaTime;
-        if (totalBonusTime >= bonusTime) {
-            score += snake.getSize();
-            totalBonusTime -= bonusTime;
-            scoreboard->setScore(score);
+        if (snake.getMoveDirection() != sf::Vector2i(0, 0)) {
+            totalBonusTime += deltaTime;
+            if (totalBonusTime >= bonusTime) {
+                score += snake.getSize();
+                totalBonusTime -= bonusTime;
+                scoreboard->setScore(score);
+            }
         }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::A))
