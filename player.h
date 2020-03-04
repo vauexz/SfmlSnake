@@ -16,8 +16,6 @@
             int getScore() const { return score; }
             void setSnakeSize(int snakeSize) { this->snakeSize = snakeSize; }
             int getSnakeSize() const { return snakeSize; }
-            bool moreScoreThan(Player& p) { return score > p.getScore(); }
-            bool longerSnakeThan(Player& p) { return snakeSize > p.getSnakeSize(); }
     };
 
 #endif

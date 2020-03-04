@@ -1,5 +1,5 @@
-main: main.o fruit.o snake.o game.o scoreboard.o gameboard.o
-	g++ main.o fruit.o snake.o game.o scoreboard.o gameboard.o\
+main: main.o fruit.o snake.o game.o scoreboard.o gameboard.o leaderboard.o
+	g++ main.o fruit.o snake.o game.o scoreboard.o gameboard.o leaderboard.o\
 		-o main \
 		-lsfml-graphics -lsfml-window -lsfml-system
 		make clean
@@ -21,6 +21,9 @@ scoreboard.o:
 
 gameboard.o:
 	g++ -c gameboard.cpp
+
+leaderboard.o:
+	g++ -c leaderboard.cpp
 
 clean:
 	rm *.o

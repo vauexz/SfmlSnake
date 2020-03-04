@@ -6,6 +6,7 @@
     #include "player.h"
     class Leaderboard {
         private:
+            std::string fileName;
             std::vector<Player> bestScore;
             std::vector<Player> longestSnake;
             sf::Font font;
@@ -13,6 +14,7 @@
         public:
             void checkResult(Player& player);
             void draw(sf::RenderWindow& window);
+            std::string getLeaderboard();    
     };
 
 #endif

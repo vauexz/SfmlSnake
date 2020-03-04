@@ -1,33 +1,30 @@
 #include "leaderboard.h"
 
-bool compareSnakeSize(const Player& p1, const Player& p2) {
-    return p1.getSnakeSize() < p2.getSnakeSize();
-}
-
-bool compareScore(const Player& p1, const Player& p2) {
-    return p1.getScore() < p2.getScore();
-}
-
 void Leaderboard::checkResult(Player& player) {
     bool flag = false;
-    if (player.moreScoreThan(bestScore[bestScore.size() - 1])) {
+    if (player.getScore() > bestScore[bestScore.size() - 1].getScore()) {
         flag = true;
         bestScore.resize(bestScore.size() - 1);
         bestScore.push_back(player);
-        std::sort(bestScore.begin(), bestScore.end(), compareScore);
+        std::sort(bestScore.begin(), bestScore.end(), [](const Player& p1, const Player& p2) {
+                                                            return p1.getScore() < p2.getScore();
+        });
     }
-    if (player.longerSnakeThan(longestSnake[longestSnake.size() - 1])) {
+    if (player.getSnakeSize() > bestScore[bestScore.size() - 1].getSnakeSize()) {
         flag = true;
         longestSnake.resize(longestSnake.size() - 1);
         longestSnake.push_back(player);
-        std::sort(longestSnake.begin(), longestSnake.end(), compareSnakeSize);
+        std::sort(longestSnake.begin(), longestSnake.end(), [](const Player& p1, const Player& p2) {
+                                                            return p1.getSnakeSize() < p2.getSnakeSize();
+        });
     }
     if (flag) {
         //save to file
     }
 }
 
-void Leaderboard::draw(sf::RenderWindow& window) {
+std::string Leaderboard::getLeaderboard() {
+
     std::string text = "Best scores (snake size):\n";
 
     int i = 1;
