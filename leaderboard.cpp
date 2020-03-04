@@ -44,7 +44,5 @@ std::string Leaderboard::getLeaderboard() {
         text += "(" + std::to_string(player.getScore()) + ")\n";
     }
 
-    sf::Text txt(text, font);
-    txt.setPosition(position);
-    window.draw(txt);
+    return text;
 }

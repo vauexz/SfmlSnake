@@ -14,14 +14,6 @@ Game::Game(Scoreboard* scoreboard, sf::Texture* texture, sf::Vector2u imageCount
 
 void Game::tick(float deltaTime) {
     
-    //to fix
-    /*if (sf::Keyboard::isKeyPressed(sf::Keyboard::P))
-        if (gameStatus == GameStatus::InProgress)
-            gameStatus = GameStatus::Paused;
-        else if (gameStatus == GameStatus::Paused)
-            gameStatus = GameStatus::InProgress;
-*/
-
     if (gameStatus == GameStatus::InProgress) {
         if (snake.getMoveDirection() != sf::Vector2i(0, 0)) {
             totalBonusTime += deltaTime;
