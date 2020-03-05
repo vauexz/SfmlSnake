@@ -12,7 +12,7 @@
             sf::Font font;
             sf::Vector2f position;
         public:
-            void checkResult(Player& player);
+            bool checkResult(Player& player);
             void draw(sf::RenderWindow& window);
             std::string getLeaderboard();    
     };

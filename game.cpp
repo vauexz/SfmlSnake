@@ -1,6 +1,6 @@
 #include "game.h"
-
-Game::Game(Scoreboard* scoreboard, sf::Texture* texture, sf::Vector2u imageCount, sf::Vector2u blockCount, sf::Vector2f blockSize, sf::Vector2f offset, float tickTime) 
+#include <iostream>
+Game::Game(Scoreboard* scoreboard, sf::Texture* texture, sf::Vector2u imageCount, sf::Vector2u blockCount, sf::Vector2f blockSize, sf::Vector2f offset, float tickTime, sf::Font font) 
 : fruit(texture, imageCount, blockSize, blockCount, offset),
   snake(sf::Vector2i(blockCount.x / 2, blockCount.y / 2), blockSize, offset) {
     
@@ -10,6 +10,9 @@ Game::Game(Scoreboard* scoreboard, sf::Texture* texture, sf::Vector2u imageCount
     this->tickTime = tickTime;
     this->blockCount = blockCount;
     gameStatus = GameStatus::InProgress;
+    this->font = font;
+    this->offset = offset;
+    this->blockSize = blockSize;
 }
 
 void Game::tick(float deltaTime) {
@@ -44,7 +47,6 @@ void Game::tick(float deltaTime) {
                 || snake.getPosition().y < 0 || snake.getPosition().y >= blockCount.y
             ) {
                 gameStatus = GameStatus::Lost;
-                /* some more stuff when game is lost */
             } else if ( snake.getPosition() == fruit.getPosition()) {
                 fruit.respawn();
                 snake.extend();
@@ -53,14 +55,35 @@ void Game::tick(float deltaTime) {
             }
         }
     } else if (gameStatus == GameStatus::Lost) {
-        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R))
+        //scoreboard->checkScore(*player);
+
+        //it can be better some day
+        std::string text = 
+            "You lost the game :(\n"
+            "Press R to restart\n";
+
+        loseInfo = new sf::Text(text, font);
+        loseInfo->setCharacterSize(30);
+        loseInfo->setPosition(sf::Vector2f(
+            offset.x + blockCount.x/3 * blockSize.x,
+            offset.y + blockCount.x/3 * blockSize.y
+        ));
+        loseInfo->setOutlineColor(sf::Color::White);
+        loseInfo->setOutlineThickness(2);
+        loseInfo->setFillColor(sf::Color::Black);
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
+            delete loseInfo;
+            loseInfo = nullptr;
             restart();
+        }
     }
 }
 
 void Game::draw(sf::RenderWindow& window) {
     snake.draw(window);
     fruit.draw(window);
+    if (loseInfo != nullptr)
+        window.draw(*loseInfo);
 };
 
 void Game::restart() {
@@ -69,6 +92,9 @@ void Game::restart() {
     fruit.respawn();
     snake.restart(sf::Vector2i(blockCount.x/2, blockCount.y/2));
     scoreboard->setScore(score);
+    
+    //player-> setScore(0);
+    //player-> setSnakeSize(1);
 }
 
 void Game::pause() {

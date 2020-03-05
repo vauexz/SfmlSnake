@@ -1,6 +1,6 @@
 #include "leaderboard.h"
 
-void Leaderboard::checkResult(Player& player) {
+bool Leaderboard::checkResult(Player& player) {
     bool flag = false;
     if (player.getScore() > bestScore[bestScore.size() - 1].getScore()) {
         flag = true;
@@ -21,6 +21,7 @@ void Leaderboard::checkResult(Player& player) {
     if (flag) {
         //save to file
     }
+    return flag;
 }
 
 std::string Leaderboard::getLeaderboard() {

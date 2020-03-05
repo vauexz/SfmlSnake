@@ -7,6 +7,7 @@ Scoreboard::Scoreboard(sf::Vector2f size, sf::Vector2f position, sf::Font font)
     model.setFillColor(sf::Color::Magenta);
     score = 0;
     this->font = font;
+    std::string inf = "";
 }
 
 void Scoreboard::draw(sf::RenderWindow& window) {
@@ -16,4 +17,8 @@ void Scoreboard::draw(sf::RenderWindow& window) {
     text.setPosition(model.getPosition() + sf::Vector2f(10,10));
 
     window.draw(text);
+}
+
+bool Scoreboard::checkScore(Player& player) {
+    return leaderboard.checkResult(player);
 }
