@@ -55,7 +55,8 @@ void Game::tick(float deltaTime) {
             }
         }
     } else if (gameStatus == GameStatus::Lost) {
-        //scoreboard->checkScore(*player);
+        auto pl = Player("XDdapqoelD", score, snake.getSize());
+        scoreboard->checkResult(pl);
 
         //it can be better some day
         std::string text = 

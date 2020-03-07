@@ -10,13 +10,16 @@
             int score;
             sf::RectangleShape model;
             sf::Font font;
-            sf::Text info;
             Leaderboard leaderboard;
+            sf::Text leaderboardText;
         public:
             Scoreboard(sf::Vector2f size, sf::Vector2f position, sf::Font font);
             void draw(sf::RenderWindow& window);
             void setScore(int score) { this->score = score; }
-            bool checkScore(Player& player);
+            bool checkResult(Player& player);
+
+        private:
+            void setLeaderboardText();
     };
 
 #endif

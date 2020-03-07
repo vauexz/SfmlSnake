@@ -1,20 +1,22 @@
-#ifndef LEADERBOARD_H
-    #define LEADERBOARD_H
+#ifndef LEADERBOARD_H_
+    #define LEADERBOARD_H_
 
-    #include <SFML/Graphics.hpp>
     #include <vector>
+    #include <fstream>
     #include "player.h"
     class Leaderboard {
         private:
-            std::string fileName;
+            const int limit = 5;
+            std::string filename;
             std::vector<Player> bestScore;
             std::vector<Player> longestSnake;
-            sf::Font font;
-            sf::Vector2f position;
         public:
+            Leaderboard(std::string filename) : filename(filename) { load(); };
             bool checkResult(Player& player);
-            void draw(sf::RenderWindow& window);
             std::string getLeaderboard();    
+        private:
+            void save();
+            void load();
     };
 
 #endif

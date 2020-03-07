@@ -1,1 +1,1 @@
-Let's try to build SFML Snake Game
+Snake with SFML 

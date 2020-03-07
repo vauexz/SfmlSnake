@@ -17,7 +17,6 @@ void Snake::move() {
 }
 
 void Snake::draw(sf::RenderWindow& window) {
-
     model.setFillColor(sf::Color::Yellow);
     model.setPosition(sf::Vector2f(
             offset.x + blockSize.x * segmentsPositions[0].x,
