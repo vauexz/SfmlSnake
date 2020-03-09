@@ -1,15 +1,14 @@
 #include "game.h"
-#include <iostream>
 Game::Game(Scoreboard* scoreboard, sf::Texture* texture, sf::Vector2u imageCount, sf::Vector2u blockCount, sf::Vector2f blockSize, sf::Vector2f offset, float tickTime, sf::Font font) 
 : fruit(texture, imageCount, blockSize, blockCount, offset),
   snake(sf::Vector2i(blockCount.x / 2, blockCount.y / 2), blockSize, offset) {
-    
+    playerName = "";
     this->scoreboard = scoreboard;
     totalTime = totalBonusTime = 0.0f;
     bonusTime = 5.0f;
     this->tickTime = tickTime;
     this->blockCount = blockCount;
-    gameStatus = GameStatus::InProgress;
+    gameStatus = GameStatus::PlayerNameInput;
     this->font = font;
     this->offset = offset;
     this->blockSize = blockSize;
@@ -47,6 +46,8 @@ void Game::tick(float deltaTime) {
                 || snake.getPosition().y < 0 || snake.getPosition().y >= blockCount.y
             ) {
                 gameStatus = GameStatus::Lost;
+                Player player = Player(playerName, score, snake.getSize());
+                scoreboard->checkResult(player);
             } else if ( snake.getPosition() == fruit.getPosition()) {
                 fruit.respawn();
                 snake.extend();
@@ -55,13 +56,11 @@ void Game::tick(float deltaTime) {
             }
         }
     } else if (gameStatus == GameStatus::Lost) {
-        auto pl = Player("XDdapqoelD", score, snake.getSize());
-        scoreboard->checkResult(pl);
-
-        //it can be better some day
+        
         std::string text = 
             "You lost the game :(\n"
-            "Press R to restart\n";
+            "Press R to restart\n"
+            "C to change player\n";
 
         loseInfo = new sf::Text(text, font);
         loseInfo->setCharacterSize(30);
@@ -77,14 +76,34 @@ void Game::tick(float deltaTime) {
             loseInfo = nullptr;
             restart();
         }
+        else if (sf::Keyboard::isKeyPressed(sf::Keyboard::C)) {
+            delete loseInfo;
+            loseInfo = nullptr;
+            restart();
+            gameStatus = GameStatus::PlayerNameInput;
+            sf::sleep(sf::milliseconds(0.2));
+        }
     }
 }
 
 void Game::draw(sf::RenderWindow& window) {
-    snake.draw(window);
-    fruit.draw(window);
-    if (loseInfo != nullptr)
-        window.draw(*loseInfo);
+    if (gameStatus == GameStatus::PlayerNameInput) {
+        sf::RectangleShape box(sf::Vector2f(blockSize.x * blockCount.x, blockSize.y * 4));
+        box.setFillColor(sf::Color::Black);
+        box.setPosition(sf::Vector2f(offset.x, (-2 + blockCount.y / 2) * blockSize.y));
+        window.draw(box);
+    
+        sf::Text text("Enter your nickname (max 8 characters):\n\n\t\t" + playerName, font);
+        text.setFillColor(sf::Color::White);
+        text.setCharacterSize(25);
+        text.setPosition(box.getPosition() + sf::Vector2f(blockSize.x,blockSize.y));
+        window.draw(text);
+    } else {
+        snake.draw(window);
+        fruit.draw(window);
+        if (loseInfo != nullptr)
+            window.draw(*loseInfo);
+    }
 };
 
 void Game::restart() {
@@ -93,9 +112,6 @@ void Game::restart() {
     fruit.respawn();
     snake.restart(sf::Vector2i(blockCount.x/2, blockCount.y/2));
     scoreboard->setScore(score);
-    
-    //player-> setScore(0);
-    //player-> setSnakeSize(1);
 }
 
 void Game::pause() {
@@ -103,4 +119,18 @@ void Game::pause() {
         gameStatus = GameStatus::Paused;
     else if (gameStatus == GameStatus::Paused)
         gameStatus = GameStatus::InProgress;
+}
+
+void Game::inputLetter(int unicode) {
+    if (unicode == 58) { // enter
+        gameStatus = GameStatus::InProgress;
+    } else if (unicode >= 0 && unicode <= 25) {
+        char c = ('A' + unicode);
+        playerName += c;
+        if (playerName.size() > 8)
+            playerName.resize(8);
+    } else if (unicode == 59) { //backspace
+        if (playerName.size() > 0)
+            playerName.resize(playerName.size() - 1);
+    }
 }

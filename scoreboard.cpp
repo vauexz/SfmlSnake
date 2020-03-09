@@ -1,10 +1,10 @@
 #include "scoreboard.h"
 
-Scoreboard::Scoreboard(sf::Vector2f size, sf::Vector2f position, sf::Font font) 
-: model(size), leaderboard("some.dat") {
+Scoreboard::Scoreboard(sf::Vector2f size, sf::Vector2f position, sf::Font font, std::string filename) 
+: model(size), leaderboard(filename) {
 
     model.setPosition(position);
-    model.setFillColor(sf::Color::Magenta);
+    model.setFillColor(sf::Color(84, 57, 71));
     score = 0;
     this->font = font;
     setLeaderboardText();
@@ -13,6 +13,7 @@ Scoreboard::Scoreboard(sf::Vector2f size, sf::Vector2f position, sf::Font font)
 void Scoreboard::draw(sf::RenderWindow& window) {
     window.draw(model);
     sf::Text text("Score: " + std::to_string(score) + "\n\nPress P to pause", font);
+    text.setFillColor(sf::Color(101, 102, 98));
     text.setCharacterSize(20);
     text.setPosition(model.getPosition() + sf::Vector2f(10,10));
     text.setOutlineColor(sf::Color::Black);
@@ -34,4 +35,6 @@ void Scoreboard::setLeaderboardText() {
     leaderboardText.setPosition(model.getPosition() + sf::Vector2f(10,200));
     leaderboardText.setOutlineColor(sf::Color::Black);
     leaderboardText.setOutlineThickness(2);
+    leaderboardText.setFillColor(sf::Color(101, 102, 98));
+
 }

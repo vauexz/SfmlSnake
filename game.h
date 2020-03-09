@@ -7,6 +7,7 @@
     #include "player.h"
 
     enum GameStatus {
+        PlayerNameInput,
         Paused,
         Lost,
         InProgress
@@ -28,12 +29,14 @@
             sf::Vector2f blockSize;
             Scoreboard* scoreboard;
             sf::Text* loseInfo = nullptr;
-            Player* player = nullptr;
+            std::string playerName;
         public:
             Game(Scoreboard* scoreboard, sf::Texture* texture, sf::Vector2u imageCount, sf::Vector2u blockCount, sf::Vector2f blockSize, sf::Vector2f offset, float tickTime, sf::Font font);
             void tick(float deltaTime);
             void draw(sf::RenderWindow& window);
             void pause();
+            void inputLetter(int unicode);
+            GameStatus getStatus() { return gameStatus; };
         private:
             void restart();
     };

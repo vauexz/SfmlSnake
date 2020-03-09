@@ -26,23 +26,21 @@ bool Leaderboard::checkResult(Player& player) {
 
 std::string Leaderboard::getLeaderboard() {
 
-    std::string text = "Best scores (snake size):\n";
+    std::string text = "Best scores:\n";
 
     int i = 1;
     for (Player& player : bestScore) {
         text += "\t" + std::to_string(i++) + ". ";
         text += player.getName() + " - ";
-        text += std::to_string(player.getScore());
-        text += "(" + std::to_string(player.getSnakeSize()) + ")\n";
+        text += std::to_string(player.getScore()) + "\n";
     }
 
     i = 1;
-    text += "\nLongest snake (score):\n";
+    text += "\nLongest snake:\n";
     for (Player& player : longestSnake) {
         text += "\t" + std::to_string(i++) + ". ";
         text += player.getName() + " - ";
-        text += std::to_string(player.getSnakeSize());
-        text += "(" + std::to_string(player.getScore()) + ")\n";
+        text += std::to_string(player.getSnakeSize()) + "\n";
     }
 
     return text;

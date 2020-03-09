@@ -5,7 +5,7 @@ Gameboard::Gameboard(sf::Vector2f offset, sf::Vector2f blockSize, sf::Vector2u b
     this->offset = offset;
     this->blockCount = blockCount;
     model.setTexture(cellTexture);
-    model.setFillColor(sf::Color(95, 232, 132));
+    model.setFillColor(sf::Color(101, 102, 98));
 }
 
 void Gameboard::draw(sf::RenderWindow& window) {

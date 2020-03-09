@@ -13,7 +13,7 @@
             Leaderboard leaderboard;
             sf::Text leaderboardText;
         public:
-            Scoreboard(sf::Vector2f size, sf::Vector2f position, sf::Font font);
+            Scoreboard(sf::Vector2f size, sf::Vector2f position, sf::Font font, std::string filename);
             void draw(sf::RenderWindow& window);
             void setScore(int score) { this->score = score; }
             bool checkResult(Player& player);
