@@ -13,7 +13,7 @@ int main() {
 
     sf::Font font;
     font.loadFromFile("font/Roboto-Black.ttf");
-    Scoreboard scoreboard(SCOREBOARD_SIZE, {0,0}, font, "highscores/highscores.dat");
+    Scoreboard scoreboard(SCOREBOARD_SIZE, {0,0}, font, "highscores.dat");
 
     sf::Texture fruitTexture;
     fruitTexture.loadFromFile("img/fruit.png");
